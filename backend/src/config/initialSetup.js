@@ -1,7 +1,36 @@
 "use strict";
 import User from "../entity/user.entity.js";
+import Roles from "../entity/userrol.entity.js"
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
+
+async function createRoles(){
+  try {
+    const rolRepository = AppDataSource.getRepository(Rol);
+    const count = await rolRepository.count();
+    await Promise.all([
+      rolRepository.save(
+        rolRepository.create({
+          nombre_rol: "admin",
+        }),
+        rolRepository.create({
+          nombre_rol: "presidente",
+        }),
+        rolRepository.create({
+          nombre_rol: "secretario",
+        }),
+        rolRepository.create({
+          nombre_rol: "tesorero",
+        }),
+      )
+    ]);
+    console.log("* => Roles creados con exito")
+
+  } catch (error) {
+    console.error("Error al crear roles: ", error);
+  }
+
+} export { createRoles };
 
 async function createUsers() {
   try {
@@ -26,7 +55,7 @@ async function createUsers() {
           rut: "21.151.897-9",
           email: "usuario1.2024@gmail.cl",
           password: await encryptPassword("user1234"),
-          rol: "usuario",
+          rol: "presidente",
         })
       ),
         userRepository.save(
@@ -35,7 +64,7 @@ async function createUsers() {
             rut: "20.630.735-8",
             email: "usuario2.2024@gmail.cl",
             password: await encryptPassword("user1234"),
-            rol: "usuario",
+            rol: "secretario",
           }),
       ),
       userRepository.save(
@@ -44,7 +73,7 @@ async function createUsers() {
           rut: "20.738.450-K",
           email: "usuario3.2024@gmail.cl",
           password: await encryptPassword("user1234"),
-          rol: "usuario",
+          rol: "tesorero",
         }),
       ),
       userRepository.save(
@@ -80,5 +109,4 @@ async function createUsers() {
     console.error("Error al crear usuarios:", error);
   }
 }
-
 export { createUsers };
