@@ -3,6 +3,7 @@ import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 
+
 export async function getUserService(query) {
   try {
     const { rut, id, email } = query;
@@ -19,7 +20,7 @@ export async function getUserService(query) {
 
     return [userData, null];
   } catch (error) {
-    console.error("Error obtener el usuario:", error);
+    console.error("Error al obtener el usuario:", error);
     return [null, "Error interno del servidor"];
   }
 }

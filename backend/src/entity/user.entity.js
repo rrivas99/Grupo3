@@ -31,6 +31,7 @@ const UserSchema = new EntitySchema({
       type: "varchar",
       length: 50,
       nullable: false,
+      default: "vecino",
     },
     password: {
       type: "varchar",
@@ -48,6 +49,7 @@ const UserSchema = new EntitySchema({
       nullable: false,
     },
   },
+
   indices: [
     {
       name: "IDX_USER",

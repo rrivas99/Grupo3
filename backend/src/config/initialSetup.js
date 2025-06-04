@@ -1,7 +1,48 @@
 "use strict";
 import User from "../entity/user.entity.js";
+import User_rol from "../entity/user_rol.entity.js";
+import Tipo_actividad from "../entity/tipo_actividad.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
+
+async function createUser_roles() {
+  try {
+    const user_rolRepository = AppDataSource.getRepository(User_rol);
+
+    const count = await user_rolRepository.count();
+    if (count > 0) return;
+    await Promise.all([
+      user_rolRepository.save(
+        user_rolRepository.create({
+          nombre_user_rol: "administrador",
+        }),
+      ),
+      user_rolRepository.save(
+        user_rolRepository.create({
+          nombre_user_rol: "presidente",
+        }),
+      ),
+      user_rolRepository.save(
+        user_rolRepository.create({
+          nombre_user_rol: "secretario",
+        }),
+      ),
+      user_rolRepository.save(
+        user_rolRepository.create({
+          nombre_user_rol: "tesorero",
+        }),
+      ),
+      user_rolRepository.save(
+        user_rolRepository.create({
+          nombre_user_rol: "vecino",
+        }),
+      ),
+    ]);
+    console.log("* => Roles creados con exito");
+  } catch (error) {
+    console.error("Error al crear los roles:", error);
+  }
+}
 
 async function createUsers() {
   try {
@@ -25,8 +66,8 @@ async function createUsers() {
           nombreCompleto: "Diego Sebastián Ampuero Belmar",
           rut: "21.151.897-9",
           email: "usuario1.2024@gmail.cl",
-          password: await encryptPassword("user1234"),
-          rol: "usuario",
+          password: await encryptPassword("presidente1234"),
+          rol: "presidente",
         })
       ),
         userRepository.save(
@@ -34,8 +75,8 @@ async function createUsers() {
             nombreCompleto: "Alexander Benjamín Marcelo Carrasco Fuentes",
             rut: "20.630.735-8",
             email: "usuario2.2024@gmail.cl",
-            password: await encryptPassword("user1234"),
-            rol: "usuario",
+            password: await encryptPassword("secretario1234"),
+            rol: "secretario",
           }),
       ),
       userRepository.save(
@@ -43,8 +84,8 @@ async function createUsers() {
           nombreCompleto: "Pablo Andrés Castillo Fernández",
           rut: "20.738.450-K",
           email: "usuario3.2024@gmail.cl",
-          password: await encryptPassword("user1234"),
-          rol: "usuario",
+          password: await encryptPassword("tesorero1234"),
+          rol: "tesorero",
         }),
       ),
       userRepository.save(
@@ -52,8 +93,8 @@ async function createUsers() {
           nombreCompleto: "Felipe Andrés Henríquez Zapata",
           rut: "20.976.635-3",
           email: "usuario4.2024@gmail.cl",
-          password: await encryptPassword("user1234"),
-          rol: "usuario",
+          password: await encryptPassword("vecino1234"),
+          rol: "vecino",
         }),
       ),
       userRepository.save(
@@ -61,8 +102,8 @@ async function createUsers() {
           nombreCompleto: "Diego Alexis Meza Ortega",
           rut: "21.172.447-1",
           email: "usuario5.2024@gmail.cl",
-          password: await encryptPassword("user1234"),
-          rol: "usuario",
+          password: await encryptPassword("vecino1234"),
+          rol: "vecino",
         }),
       ),
       userRepository.save(
@@ -70,8 +111,8 @@ async function createUsers() {
           nombreCompleto: "Juan Pablo Rosas Martin",
           rut: "20.738.415-1",
           email: "usuario6.2024@gmail.cl",
-          password: await encryptPassword("user1234"),
-          rol: "usuario",
+          password: await encryptPassword("vecino1234"),
+          rol: "vecino",
         }),
       ),
     ]);
@@ -81,4 +122,38 @@ async function createUsers() {
   }
 }
 
-export { createUsers };
+async function createTipo_actividad() {
+  try {
+    const tipo_actividadRepository = AppDataSource.getRepository(Tipo_actividad);
+
+    const count = await tipo_actividadRepository.count();
+    if (count > 0) return;
+    await Promise.all([
+      tipo_actividadRepository.save(
+        tipo_actividadRepository.create({
+          nombre_tipo_actividad: "reunion",
+        }),
+      ),
+      tipo_actividadRepository.save(
+        tipo_actividadRepository.create({
+          nombre_tipo_actividad: "fiesta",
+        }),
+      ),
+      tipo_actividadRepository.save(
+        tipo_actividadRepository.create({
+          nombre_tipo_actividad: "bingo",
+        }),
+      ),
+      tipo_actividadRepository.save(
+        tipo_actividadRepository.create({
+          nombre_tipo_actividad: "colecta",
+        }),
+      )
+    ]);
+    console.log("* => Tipos de actividad creados con exito");
+  } catch (error) {
+    console.error("Error creando los tipos de actividad:", error);
+  }
+}
+
+export { createUser_roles, createUsers, createTipo_actividad };
