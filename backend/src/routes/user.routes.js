@@ -8,7 +8,6 @@ import {
   getUsers,
   updateUser,
 } from "../controllers/user.controller.js";
-
 const router = Router();
 
 router

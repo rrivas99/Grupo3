@@ -5,7 +5,7 @@ const UserSchema = new EntitySchema({
   name: "User",
   tableName: "users",
   columns: {
-    id_user: {
+    id: {
       type: "int",
       primary: true,
       generated: true,
@@ -27,6 +27,12 @@ const UserSchema = new EntitySchema({
       nullable: false,
       unique: true,
     },
+    rol: {
+      type: "varchar",
+      length: 50,
+      nullable: false,
+      default: "vecino",
+    },
     password: {
       type: "varchar",
       nullable: false,
@@ -42,28 +48,12 @@ const UserSchema = new EntitySchema({
       onUpdate: "CURRENT_TIMESTAMP",
       nullable: false,
     },
-
-    id_rol: {
-      type: "int",
-      nullable: false,
-    },
-    id_evento: {
-      type: "int",
-      nullable: false,
-    },
-  },
-  relations:{
-    evento: {
-      target: "Evento",
-      type: "one-to-many",
-      inverseside: "id_user"
-    },
   },
 
   indices: [
     {
       name: "IDX_USER",
-      columns: ["id_user"],
+      columns: ["id"],
       unique: true,
     },
     {

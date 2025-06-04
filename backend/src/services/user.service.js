@@ -1,20 +1,9 @@
 "use strict";
 import User from "../entity/user.entity.js";
-import Userrol from "../entity/userrol.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 
-export async function createUserService(body) {
-  try {
-    const { nombreCompleto, rut, email, password } = body;
 
-    const userRepository = AppDataSource.getRepository(User);
-    const userrolRepository = AppDataSource.getRepository(Userrol);
-  } catch (error) {
-    console.error("Error al crear usuario:", error);
-    return [null, "Error interno del servidor"];
-  }
-}
 export async function getUserService(query) {
   try {
     const { rut, id, email } = query;
@@ -31,7 +20,7 @@ export async function getUserService(query) {
 
     return [userData, null];
   } catch (error) {
-    console.error("Error obtener el usuario:", error);
+    console.error("Error al obtener el usuario:", error);
     return [null, "Error interno del servidor"];
   }
 }
