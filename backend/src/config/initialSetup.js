@@ -1,48 +1,8 @@
 "use strict";
 import User from "../entity/user.entity.js";
-import User_rol from "../entity/user_rol.entity.js";
-import Tipo_actividad from "../entity/tipo_actividad.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
-async function createUser_roles() {
-  try {
-    const user_rolRepository = AppDataSource.getRepository(User_rol);
-
-    const count = await user_rolRepository.count();
-    if (count > 0) return;
-    await Promise.all([
-      user_rolRepository.save(
-        user_rolRepository.create({
-          nombre_user_rol: "administrador",
-        }),
-      ),
-      user_rolRepository.save(
-        user_rolRepository.create({
-          nombre_user_rol: "presidente",
-        }),
-      ),
-      user_rolRepository.save(
-        user_rolRepository.create({
-          nombre_user_rol: "secretario",
-        }),
-      ),
-      user_rolRepository.save(
-        user_rolRepository.create({
-          nombre_user_rol: "tesorero",
-        }),
-      ),
-      user_rolRepository.save(
-        user_rolRepository.create({
-          nombre_user_rol: "vecino",
-        }),
-      ),
-    ]);
-    console.log("* => Roles creados con exito");
-  } catch (error) {
-    console.error("Error al crear los roles:", error);
-  }
-}
 
 async function createUsers() {
   try {
@@ -122,38 +82,5 @@ async function createUsers() {
   }
 }
 
-async function createTipo_actividad() {
-  try {
-    const tipo_actividadRepository = AppDataSource.getRepository(Tipo_actividad);
 
-    const count = await tipo_actividadRepository.count();
-    if (count > 0) return;
-    await Promise.all([
-      tipo_actividadRepository.save(
-        tipo_actividadRepository.create({
-          nombre_tipo_actividad: "reunion",
-        }),
-      ),
-      tipo_actividadRepository.save(
-        tipo_actividadRepository.create({
-          nombre_tipo_actividad: "fiesta",
-        }),
-      ),
-      tipo_actividadRepository.save(
-        tipo_actividadRepository.create({
-          nombre_tipo_actividad: "bingo",
-        }),
-      ),
-      tipo_actividadRepository.save(
-        tipo_actividadRepository.create({
-          nombre_tipo_actividad: "colecta",
-        }),
-      )
-    ]);
-    console.log("* => Tipos de actividad creados con exito");
-  } catch (error) {
-    console.error("Error creando los tipos de actividad:", error);
-  }
-}
-
-export { createUser_roles, createUsers, createTipo_actividad };
+export { createUsers };

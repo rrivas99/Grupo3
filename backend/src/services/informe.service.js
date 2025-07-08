@@ -1,5 +1,5 @@
 "use strict";
-import Finanzas_informe from "../entity/finanzas_informe.entity.js";
+import Finanzas_informe from "../entity/informe.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
 export async function createFinanzas_informeService(dataFinanzas_informe) {

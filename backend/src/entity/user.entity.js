@@ -28,8 +28,8 @@ const UserSchema = new EntitySchema({
       unique: true,
     },
     rol: {
-      type: "varchar",
-      length: 50,
+      type: "enum",
+      enum: ["administrador", "presidente", "tesorero", "secretario", "vecino"],
       nullable: false,
       default: "vecino",
     },

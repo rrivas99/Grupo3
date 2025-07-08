@@ -15,6 +15,11 @@ const ActividadSchema = new EntitySchema({
             length: 255,
             nullable: false,
         },
+        tipo: {
+            type: "varchar",
+            enum: ["votacion", "reunion", "fiesta", "bingo", "colecta", "rifa"],
+            nullable: false,
+        },
         fecha: {
             type: "date",
             nullable: false,
@@ -26,8 +31,8 @@ const ActividadSchema = new EntitySchema({
             default: () => "CURRENT_TIME",
         },
         estado: {
-            type: "varchar",
-            length: 50,
+            type: "enum",
+            enum: ["pendiente", "realizada", "cancelada"],
             default: "pendiente",
             nullable: false,
         },
@@ -57,6 +62,11 @@ const ActividadSchema = new EntitySchema({
         {
             name: "IDX_NOMBRE_ACTIVIDAD",
             columns: ["nombre"],
+            unique: false,
+        },
+        {
+            name: "IDX_TIPO_ACTIVIDAD",
+            columns: ["tipo"],
             unique: false,
         },
         {

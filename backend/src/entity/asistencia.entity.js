@@ -18,11 +18,6 @@ const AsistenciaSchema = new EntitySchema({
     },
     indices: [
         {
-            name: "IDX_ID_ASISTENCIA",
-            columns: ["id_asistencia"],
-            unique: true,
-        },
-        {
             name: "IDX_PRESENTE",
             columns: ["presente"],
             unique: false,
