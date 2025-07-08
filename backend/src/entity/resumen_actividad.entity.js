@@ -1,5 +1,6 @@
 "use strict";
-import { EntitySchema, Timestamp } from "typeorm";
+import { EntitySchema, JoinColumn, Timestamp } from "typeorm";
+import { JoinAttribute } from "typeorm/query-builder/JoinAttribute.js";
 
 const Resumen_ActividadSchema = new EntitySchema({
     name: "Resumen_Actividad",
@@ -18,7 +19,7 @@ const Resumen_ActividadSchema = new EntitySchema({
     },
     indices: [
         {
-            name: "IDX_RESUMEN_ACTIVIDAD",
+            name: "IDX_ID_RESUMEN",
             columns: ["id_resumen"],
             unique: true,
         },

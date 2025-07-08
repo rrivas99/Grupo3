@@ -5,7 +5,7 @@ const UserSchema = new EntitySchema({
   name: "User",
   tableName: "users",
   columns: {
-    id: {
+    id_user: {
       type: "int",
       primary: true,
       generated: true,
@@ -53,7 +53,7 @@ const UserSchema = new EntitySchema({
   indices: [
     {
       name: "IDX_USER",
-      columns: ["id"],
+      columns: ["id_user"],
       unique: true,
     },
     {
