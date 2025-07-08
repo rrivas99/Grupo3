@@ -56,6 +56,16 @@ const UserSchema = new EntitySchema({
       type: "one-to-many",
       inverseSide: "id_tesorero",
     },
+    reclamos:{
+      target: "Reclamo",
+      type: "one-to-many",
+      inverseSide: "id_vecino",
+    },
+    vigente:{
+      target: "Vigencia",
+      type: "one-to-many",
+      inverseSide: "id_directiva"
+    },
   },
 
   indices: [

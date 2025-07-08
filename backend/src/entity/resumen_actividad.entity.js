@@ -17,6 +17,26 @@ const Resumen_ActividadSchema = new EntitySchema({
             nullable: false,
         },
     },
+
+    relations: {
+        actividad: {
+            target: "Actividad",
+            type: "one-to-one",
+            JoinColumn: {
+                name: "id_actividad",
+                referencedColumnName: "id_actividad"
+            }
+        },
+        secretario: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_secretario",
+                referencedColumnName: "id_user"
+            },
+        }
+    },
+
     indices: [
         {
             name: "IDX_ID_RESUMEN",

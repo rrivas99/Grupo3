@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema, Timestamp } from "typeorm";
+import { EntitySchema, JoinColumn, Timestamp } from "typeorm";
 
 const VigenciaSchema = new EntitySchema({
     name: "Vigencia",
@@ -13,6 +13,26 @@ const VigenciaSchema = new EntitySchema({
         vigente: {
             type: "boolean",
             default: true,
+            nullable: false,
+        },
+    },
+    relations: {
+        id_directiva: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_directiva",
+                referencedColumnName: "id_user"
+            },
+            nullable: false,
+        },
+        periodo: {
+            target: "Periodo",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_periodo",
+                referencedColumnName: "id_periodo",
+            },
             nullable: false,
         },
     },

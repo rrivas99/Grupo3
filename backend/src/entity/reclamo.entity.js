@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const ReclamoSchema = new EntitySchema({
     name: "Reclamo",
@@ -31,6 +31,16 @@ const ReclamoSchema = new EntitySchema({
         fecha_resolucion: {
             type: "timestamp with time zone",
             default: ()=>"CURRENT_TIMESTAMP",
+        },
+    },
+    relations: {
+        vecino: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_vecino",
+                referencedColumnName: "id_user"
+            },
         },
     },
     indices: [

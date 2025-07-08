@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema, Timestamp } from "typeorm";
+import { EntitySchema, JoinColumn, Timestamp } from "typeorm";
 
 const VotoSchema = new EntitySchema({
     name: "Voto",
@@ -21,6 +21,26 @@ const VotoSchema = new EntitySchema({
             nullable: false,
         },
     },
+
+    relations: {
+        actividad: {
+            target: "Actividad",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "votacion",
+                referencedColumnName: "id_actividad"
+            }
+        },
+        votante: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "user",
+                referencedColumnName: "id_user"
+            },
+        },
+    },
+
     indices: [
         {
             name: "IDX_ID_VOTO",

@@ -25,7 +25,7 @@ const AsistenciaSchema = new EntitySchema({
                 name: "id_user",
                 referencedColumnName: "id_user",
             },
-            nullable: false
+            nullable: false,
         },
         id_actividad: {
             target: "Actividad",

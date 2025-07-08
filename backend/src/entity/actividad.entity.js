@@ -5,7 +5,7 @@ const ActividadSchema = new EntitySchema({
     name: "Actividad",
     tableName: "actividades",
     columns: {
-        id: {
+        id_actividad: {
             type: "int",
             primary: true,
             generated: true,
@@ -60,11 +60,21 @@ const ActividadSchema = new EntitySchema({
             type: "one-to-many",
             inverseSide: "id_actividad",
         },
+        resumen_actividad: {
+            target: "Resumen_Actividad",
+            type: "one-to-one",
+            inverseSide: "actividad"
+        },
+        votacion: {
+            target: "Voto",
+            type: "one-to-many",
+            inverseSide: "actividad"
+        }
     },
     indices: [
         {
             name: "IDX_ID_ACTIVIDAD",
-            columns: ["id"],
+            columns: ["id_actividad"],
             unique: true,
         },
         {
