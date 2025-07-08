@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const AsistenciaSchema = new EntitySchema({
     name: "Asistencia",
@@ -16,6 +16,27 @@ const AsistenciaSchema = new EntitySchema({
             nullable: false,
         },
     },
+
+    relations: {
+        id_user: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_user",
+                referencedColumnName: "id_user",
+            },
+            nullable: false
+        },
+        id_actividad: {
+            target: "Actividad",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_actividad",
+                referencedColumnName: "id_actividad",
+            },
+        },
+    },
+
     indices: [
         {
             name: "IDX_PRESENTE",

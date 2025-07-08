@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const InformeSchema = new EntitySchema({
     name: "Informe",
@@ -37,7 +37,19 @@ const InformeSchema = new EntitySchema({
             nullable: false,
         },
     },
-    
+    relations:{
+        tesorero: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_tesorero",
+                referencedColumnName: "id_user",
+            },
+            nullable: false,
+            onDelete: "CASCADE",
+        },
+    },
+
     indices: [
         {
             name: "IDX_ID_INFORME",

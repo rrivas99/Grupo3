@@ -53,6 +53,14 @@ const ActividadSchema = new EntitySchema({
             nullable: false,
         },
     },
+
+    relations: {
+        asistencia: {
+            target: "Asistencia",
+            type: "one-to-many",
+            inverseSide: "id_actividad",
+        },
+    },
     indices: [
         {
             name: "IDX_ID_ACTIVIDAD",

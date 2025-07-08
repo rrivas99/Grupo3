@@ -1,5 +1,5 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const UserSchema = new EntitySchema({
   name: "User",
@@ -47,6 +47,14 @@ const UserSchema = new EntitySchema({
       default: () => "CURRENT_TIMESTAMP",
       onUpdate: "CURRENT_TIMESTAMP",
       nullable: false,
+    },
+  },
+
+  relations: {
+    informes: {
+      target: "Informe",
+      type: "one-to-many",
+      inverseSide: "id_tesorero",
     },
   },
 
