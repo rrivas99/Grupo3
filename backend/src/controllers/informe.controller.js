@@ -5,7 +5,7 @@ import {
   getFinanzas_informeService,
   getFinanzas_informesService,
   updateFinanzas_informeService,
-} from "../services/finanzas_informe.service.js";
+} from "../services/informe.service.js";
 import {
   handleErrorClient,
   handleErrorServer,

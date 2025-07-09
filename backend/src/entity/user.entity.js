@@ -1,11 +1,11 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const UserSchema = new EntitySchema({
   name: "User",
   tableName: "users",
   columns: {
-    id: {
+    id_user: {
       type: "int",
       primary: true,
       generated: true,
@@ -28,8 +28,8 @@ const UserSchema = new EntitySchema({
       unique: true,
     },
     rol: {
-      type: "varchar",
-      length: 50,
+      type: "enum",
+      enum: ["administrador", "presidente", "tesorero", "secretario", "vecino"],
       nullable: false,
       default: "vecino",
     },
@@ -50,10 +50,28 @@ const UserSchema = new EntitySchema({
     },
   },
 
+  relations: {
+    informes: {
+      target: "Informe",
+      type: "one-to-many",
+      inverseSide: "id_tesorero",
+    },
+    reclamos:{
+      target: "Reclamo",
+      type: "one-to-many",
+      inverseSide: "id_vecino",
+    },
+    vigente:{
+      target: "Vigencia",
+      type: "one-to-many",
+      inverseSide: "id_directiva"
+    },
+  },
+
   indices: [
     {
       name: "IDX_USER",
-      columns: ["id"],
+      columns: ["id_user"],
       unique: true,
     },
     {

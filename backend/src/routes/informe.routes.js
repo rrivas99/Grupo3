@@ -8,7 +8,7 @@ import {
   getFinanzas_informe,
   getFinanzas_informes,
   updateFinanzas_informe,
-} from "../controllers/finanzas_informe.controller.js";
+} from "../controllers/informe.controller.js";
 const router = Router();
 
 router

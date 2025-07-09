@@ -1,11 +1,11 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
 const ActividadSchema = new EntitySchema({
     name: "Actividad",
     tableName: "actividades",
     columns: {
-        id: {
+        id_actividad: {
             type: "int",
             primary: true,
             generated: true,
@@ -13,6 +13,11 @@ const ActividadSchema = new EntitySchema({
         nombre: {
             type: "varchar",
             length: 255,
+            nullable: false,
+        },
+        tipo: {
+            type: "varchar",
+            enum: ["votacion", "reunion", "fiesta", "bingo", "colecta", "rifa"],
             nullable: false,
         },
         fecha: {
@@ -26,8 +31,8 @@ const ActividadSchema = new EntitySchema({
             default: () => "CURRENT_TIME",
         },
         estado: {
-            type: "varchar",
-            length: 50,
+            type: "enum",
+            enum: ["pendiente", "realizada", "cancelada"],
             default: "pendiente",
             nullable: false,
         },
@@ -48,15 +53,38 @@ const ActividadSchema = new EntitySchema({
             nullable: false,
         },
     },
+
+    relations: {
+        asistencia: {
+            target: "Asistencia",
+            type: "one-to-many",
+            inverseSide: "id_actividad",
+        },
+        resumen_actividad: {
+            target: "Resumen_Actividad",
+            type: "one-to-one",
+            inverseSide: "actividad"
+        },
+        votacion: {
+            target: "Voto",
+            type: "one-to-many",
+            inverseSide: "actividad"
+        }
+    },
     indices: [
         {
             name: "IDX_ID_ACTIVIDAD",
-            columns: ["id"],
+            columns: ["id_actividad"],
             unique: true,
         },
         {
             name: "IDX_NOMBRE_ACTIVIDAD",
             columns: ["nombre"],
+            unique: false,
+        },
+        {
+            name: "IDX_TIPO_ACTIVIDAD",
+            columns: ["tipo"],
             unique: false,
         },
         {

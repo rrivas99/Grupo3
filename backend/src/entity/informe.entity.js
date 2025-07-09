@@ -1,18 +1,23 @@
 "use strict";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, JoinColumn } from "typeorm";
 
-const Finanzas_informeSchema = new EntitySchema({
-    name: "Finanzas_informe",
-    tableName: "finanzas_informes",
+const InformeSchema = new EntitySchema({
+    name: "Informe",
+    tableName: "informes",
     columns: {
         id: {
             type: "int",
             primary: true,
             generated: true,
         },
-        fecha_creacion: {
-            type: "date",
-            default: () => "CURRENT_DATE",
+        titulo: {
+            type: "varchar",
+            length: 255,
+            nullable: false,
+        },
+        fecha_informe: {
+            type: "timestamp with time zone",
+            default: () => "CURRENT_TIMESTAMP",
             nullable: false,
         },
         ingresos: {
@@ -32,7 +37,19 @@ const Finanzas_informeSchema = new EntitySchema({
             nullable: false,
         },
     },
-    
+    relations:{
+        tesorero: {
+            target: "User",
+            type: "many-to-one",
+            JoinColumn: {
+                name: "id_tesorero",
+                referencedColumnName: "id_user",
+            },
+            nullable: false,
+            onDelete: "CASCADE",
+        },
+    },
+
     indices: [
         {
             name: "IDX_ID_INFORME",
@@ -40,8 +57,13 @@ const Finanzas_informeSchema = new EntitySchema({
             unique: true,
         },
         {
+            name: "IDX_TITULO",
+            columns: ["titulo"],
+            unique: false,
+        },
+        {
             name: "IDX_FECHA_INFORME",
-            columns: ["fecha_creacion"],
+            columns: ["fecha_informe"],
             unique: false,
         },
         {
@@ -57,4 +79,4 @@ const Finanzas_informeSchema = new EntitySchema({
     ],
 });
 
-export default Finanzas_informeSchema;
+export default InformeSchema;

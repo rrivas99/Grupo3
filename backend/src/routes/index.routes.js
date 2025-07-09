@@ -3,13 +3,13 @@ import { Router } from "express";
 import userRoutes from "./user.routes.js";
 import authRoutes from "./auth.routes.js";
 import actividadRoutes from "./actividad.routes.js";
-import finanzas_informeRoutes from "./finanzas_informe.routes.js";
+import informeRoutes from "./informe.routes.js";
 const router = Router();
 
 router
     .use("/auth", authRoutes)
     .use("/user", userRoutes)
     .use("/actividad", actividadRoutes)
-    .use("/finanzas_informe", finanzas_informeRoutes);
+    .use("/informe", informeRoutes);
 
 export default router;
