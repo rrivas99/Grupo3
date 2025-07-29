@@ -1,18 +1,29 @@
 "use strict";
 import { EntitySchema, JoinColumn } from "typeorm";
 
-const AsistenciaSchema = new EntitySchema({
-    name: "Asistencia",
-    tableName: "asistencias",
+const SolicitudSchema = new EntitySchema({
+    name: "Solicitud",
+    tableName: "solicitudes",
     columns: {
-        id_asistencia: {
+        id: {
             type: "int",
             primary: true,
             generated: true,
         },
-        presente: {
-            type: "boolean",
-            default: false,
+        tipo_solicitud: {
+            type: "enum",
+            enum: ["reclamo", "sugerencia", "documentacion"],
+            nullable: false,
+        },
+        texto_solicitud: {
+            type: "varchar",
+            length: 512,
+            nullable: false,
+        },
+        estado: {
+            type: "enum",
+            enum: ["pendiente", "resuelto"],
+            default: "pendiente",
             nullable: false,
         },
         createdAt: {
@@ -27,34 +38,23 @@ const AsistenciaSchema = new EntitySchema({
             nullable: false,
         },
     },
-
     relations: {
-        id_user: {
+        vecino: {
             target: "User",
             type: "many-to-one",
             JoinColumn: {
-                name: "id_user",
-                referencedColumnName: "id_user",
-            },
-            nullable: false,
-        },
-        id_actividad: {
-            target: "Actividad",
-            type: "many-to-one",
-            JoinColumn: {
-                name: "id_actividad",
-                referencedColumnName: "id_actividad",
+                name: "id_vecino",
+                referencedColumnName: "id_user"
             },
         },
     },
-
     indices: [
         {
-            name: "IDX_ASISTENCIA",
-            columns: ["id_asistencia"],
-            unique: false,
+            name: "IDX_ID_solicitud",
+            columns: ["id_solicitud"],
+            unique: true,
         },
     ],
 });
 
-export default AsistenciaSchema;
+export default SolicitudSchema;

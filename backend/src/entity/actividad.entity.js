@@ -5,7 +5,7 @@ const ActividadSchema = new EntitySchema({
     name: "Actividad",
     tableName: "actividades",
     columns: {
-        id_actividad: {
+        id: {
             type: "int",
             primary: true,
             generated: true,
@@ -17,7 +17,13 @@ const ActividadSchema = new EntitySchema({
         },
         tipo: {
             type: "varchar",
-            enum: ["votacion", "reunion", "fiesta", "bingo", "colecta", "rifa"],
+            enum: ["asamblea",
+                   "votacion", 
+                   "reunion", 
+                   "fiesta", 
+                   "bingo", 
+                   "colecta", 
+                   "rifa"],
             nullable: false,
         },
         fecha: {
@@ -34,11 +40,6 @@ const ActividadSchema = new EntitySchema({
             type: "enum",
             enum: ["pendiente", "realizada", "cancelada"],
             default: "pendiente",
-            nullable: false,
-        },
-        realizada:{
-            type: "boolean",
-            default: false,
             nullable: false,
         },
         createdAt: {
@@ -76,36 +77,6 @@ const ActividadSchema = new EntitySchema({
             name: "IDX_ID_ACTIVIDAD",
             columns: ["id_actividad"],
             unique: true,
-        },
-        {
-            name: "IDX_NOMBRE_ACTIVIDAD",
-            columns: ["nombre"],
-            unique: false,
-        },
-        {
-            name: "IDX_TIPO_ACTIVIDAD",
-            columns: ["tipo"],
-            unique: false,
-        },
-        {
-            name: "IDX_FECHA_ACTIVIDAD",
-            columns: ["fecha"],
-            unique: false,
-        },
-        {
-            name: "IDX_HORA_ACTIVIDAD",
-            columns: ["hora"],
-            unique: false,
-        },
-        {
-            name: "IDX_ESTADO_ACTIVIDAD",
-            columns: ["estado"],
-            unique: false,
-        },
-        {
-            name: "IDX_REALIZADA",
-            columns: ["realizada"],
-            unique: false,
         },
     ],
 });

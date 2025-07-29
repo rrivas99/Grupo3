@@ -11,9 +11,25 @@ const Resumen_ActividadSchema = new EntitySchema({
             primary: true,
             generated: true,
         },
-        texto: {
+        titulo: {
             type: "varchar",
-            default: true,
+            length: 255,
+            nullable: false,
+        },
+        nombre_archivo: {
+            type: "varchar",
+            length: 255,
+            nullable: false,
+        },
+        createdAt: {
+            type: "timestamp with time zone",
+            default: () => "CURRENT_TIMESTAMP",
+            nullable: false,
+        },
+        updatedAt: {
+            type: "timestamp with time zone",
+            default: () => "CURRENT_TIMESTAMP",
+            onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
         },
     },
@@ -42,11 +58,6 @@ const Resumen_ActividadSchema = new EntitySchema({
             name: "IDX_ID_RESUMEN",
             columns: ["id_resumen"],
             unique: true,
-        },
-        {
-            name: "IDX_TEXTO",
-            columns: ["texto"],
-            unique: false,
         },
     ],
 });

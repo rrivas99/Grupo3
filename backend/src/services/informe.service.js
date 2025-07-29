@@ -1,18 +1,18 @@
 "use strict";
-import Finanzas_informe from "../entity/informe.entity.js";
+import Informe from "../entity/informe.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
-export async function createFinanzas_informeService(dataFinanzas_informe) {
+export async function createInformeService(dataInforme) {
     try {
-        const finanzas_informeRepository = AppDataSource.getRepository(Finanzas_informe);
+        const informeRepository = AppDataSource.getRepository(Informe);
 
-        const newFinanzas_informe = finanzas_informeRepository.create({
-            ingresos: dataFinanzas_informe.ingresos,
-            egresos: dataFinanzas_informe.egresos,
+        const newInforme = informeRepository.create({
+            ingresos: dataInforme.ingresos,
+            egresos: dataInforme.egresos,
         });
 
-        const finanzas_informeSaved = await finanzas_informeRepository.save(newFinanzas_informe);
-        return [finanzas_informeSaved, null];
+        const informeSaved = await informeRepository.save(newInforme);
+        return [informeSaved, null];
 
     } catch (error) {
         console.error("Error creando el informe: ", error);
@@ -20,66 +20,66 @@ export async function createFinanzas_informeService(dataFinanzas_informe) {
     }
 }
 
-export async function getFinanzas_informeService(query) {
+export async function getInformeService(query) {
     try {
         const { id, ingresos, egresos } = query;
 
-        const finanzas_informeRepository = AppDataSource.getRepository(Finanzas_informe);
+        const informeRepository = AppDataSource.getRepository(Informe);
 
-        const finanzas_informeFound = await finanzas_informeRepository.findOne({ 
+        const informeFound = await informeRepository.findOne({ 
             where: [ { id: id }, { ingresos: ingresos }, { egresos: egresos } ],
         });
 
-        if(!finanzas_informeFound) return [null, "Informe no encontrado"];
+        if(!informeFound) return [null, "Informe no encontrado"];
 
-        const { ...finanzas_informeData } = finanzas_informeFound;
+        const { ...informeData } = informeFound;
 
-        return[finanzas_informeData, null];
+        return[informeData, null];
     } catch (error) {
         console.error("Error al obtener el informe: ", error);
         return [null, "Error interno del servidor"];
     }
 }
 
-export async function getFinanzas_informesService() {
+export async function getInformesService() {
     try {
-        const finanzas_informeRepository = AppDataSource.getRepository(Finanzas_informe);
+        const informeRepository = AppDataSource.getRepository(Informe);
 
-        const finanzas_informe = await finanzas_informeRepository.find();
+        const informe = await informeRepository.find();
 
-        if(!finanzas_informe || finanzas_informe.length === 0) return [null, "no hay informes"];
+        if(!informe || informe.length === 0) return [null, "no hay informes"];
 
-        const finanzas_informeData = finanzas_informe.map(({ ...finanzas_informe }) => finanzas_informe);
-        return [finanzas_informeData, null];
+        const informeData = informe.map(({ ...informe }) => informe);
+        return [informeData, null];
     } catch (error) {
         console.error("Error al obtener los informes: ", error);
         return [null, "Error interno del servidor"];
     }
 }
 
-export async function updateFinanzas_informeService(query, body) {
+export async function updateInformeService(query, body) {
     try {
         const { id } = query;
 
-        const finanzas_informeRepository = AppDataSource.getRepository(Finanzas_informe);
-        const finanzas_informeFound = await finanzas_informeRepository.findOne({ where: [{ id: id }], });
+        const informeRepository = AppDataSource.getRepository(Informe);
+        const informeFound = await informeRepository.findOne({ where: [{ id: id }], });
 
-        if(!finanzas_informeFound) return [null, "Informe no encontrado"];
+        if(!informeFound) return [null, "Informe no encontrado"];
 
-        const dataFinanzas_informe = {
+        const dataInforme = {
             ingresos: body.ingresos,
             egresos: body. egresos,
             updatedAt: new Date(),
         };
 
 
-        await finanzas_informeRepository.update({ id: finanzas_informeFound.id }, dataFinanzas_informe);
-        const finanzas_informeData = await finanzas_informeRepository.findOne({
-            where: [{ id: finanzas_informeFound.id }],
+        await informeRepository.update({ id: informeFound.id }, dataInforme);
+        const informeData = await informeRepository.findOne({
+            where: [{ id: informeFound.id }],
         });
         
-        const { ...finanzas_informeUpdated } = finanzas_informeData;
-        return [finanzas_informeUpdated, null];
+        const { ...informeUpdated } = informeData;
+        return [informeUpdated, null];
 
     } catch (error) {
         console.error("Error al actualizar el informe: ", error);
@@ -87,17 +87,17 @@ export async function updateFinanzas_informeService(query, body) {
     }
 }
 
-export async function deleteFinanzas_informeService(query) {
+export async function deleteInformeService(query) {
     try {
         const { id } = query;
-        const finanzas_informeRepository = AppDataSource.getRepository(Finanzas_informe);
-        const finanzas_informeFound = await finanzas_informeRepository.findOne({ where: [{ id: id }], });
+        const informeRepository = AppDataSource.getRepository(Informe);
+        const informeFound = await informeRepository.findOne({ where: [{ id: id }], });
 
-        const finanzas_informeDeleted = await finanzas_informeRepository.remove(finanzas_informeFound);
+        const informeDeleted = await informeRepository.remove(informeFound);
 
-        const { ...dataFinanzas_informe } = finanzas_informeDeleted;
+        const { ...dataInforme } = informeDeleted;
         
-        return [dataFinanzas_informe, null];
+        return [dataInforme, null];
 
     } catch (error) {
         console.error("Error al eliminar el informe: ", error);

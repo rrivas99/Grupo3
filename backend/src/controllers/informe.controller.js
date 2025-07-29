@@ -1,10 +1,10 @@
 "use strict";
 import {
-  createFinanzas_informeService,
-  deleteFinanzas_informeService,
-  getFinanzas_informeService,
-  getFinanzas_informesService,
-  updateFinanzas_informeService,
+  createInformeService,
+  deleteInformeService,
+  getInformeService,
+  getInformesService,
+  updateInformeService,
 } from "../services/informe.service.js";
 import {
   handleErrorClient,
@@ -12,26 +12,26 @@ import {
   handleSuccess,
 } from "../handlers/responseHandlers.js";
 
-export async function createFinanzas_informe(req, res) {
+export async function createInforme(req, res) {
     try {
-      const finanzas_informe = req.body;
+      const informe = req.body;
 
-      const [newFinanzas_informe, errornewFinanzas_informe] = await createFinanzas_informeService(finanzas_informe);
+      const [newInforme, errornewInforme] = await createInformeService(informe);
 
-      if (errornewFinanzas_informe) return handleErrorClient(res, 400, errornewFinanzas_informe);
+      if (errornewInforme) return handleErrorClient(res, 400, errornewInforme);
       
-      handleSuccess(res, 201, "Informe creado", newFinanzas_informe);
+      handleSuccess(res, 201, "Informe creado", newInforme);
       
     } catch (error) {
       handleErrorServer(res,500, error.message);
     }
 }
 
-export async function getFinanzas_informe(req, res) {
+export async function getInforme(req, res) {
   try {
     const { id, ingresos, egresos } = req.query;
 
-    const [ inf, errorInf] = await getFinanzas_informeService({ id, ingresos, egresos });
+    const [ inf, errorInf] = await getInformeService({ id, ingresos, egresos });
 
     if(errorInf) return handleErrorClient(res, 404, errorInf);
 
@@ -41,44 +41,44 @@ export async function getFinanzas_informe(req, res) {
   }
 }
 
-export async function getFinanzas_informes(req, res) {
+export async function getInformes(req, res) {
   try {
-    const [finanzas_informes, errorFinanzas_informes] = await getFinanzas_informesService();
+    const [informes, errorInformes] = await getInformesService();
 
-    if(errorFinanzas_informes) return handleErrorClient(res, 404, errorFinanzas_informes);
+    if(errorInformes) return handleErrorClient(res, 404, errorInformes);
 
-    finanzas_informes.length === 0
+    informes.length === 0
       ? handleSuccess(res, 204, "No hay informes")
-      : handleSuccess(res, 200, "Informes encontrados", finanzas_informes);
+      : handleSuccess(res, 200, "Informes encontrados", informes);
 
   } catch (error) {
     handleErrorServer(res,500, error.message);
   }
 }
 
-export async function updateFinanzas_informe(req, res) {
+export async function updateInforme(req, res) {
   try {
     const { id } = req.query
     const { body } = req;
 
-    const [finanzas_informe, errorFinanzas_informe] = await updateFinanzas_informeService({ id }, body);
-    if (errorFinanzas_informe) return handleErrorClient(res,404, errorFinanzas_informe);
+    const [informe, errorInforme] = await updateInformeService({ id }, body);
+    if (errorInforme) return handleErrorClient(res,404, errorInforme);
     
-    handleSuccess(res, 200, "Informe actualizado", finanzas_informe);
+    handleSuccess(res, 200, "Informe actualizado", informe);
   } catch (error) {
     handleErrorServer(res,500, error.message);
   }
 }
 
-export async function deleteFinanzas_informe(req, res) {
+export async function deleteInforme(req, res) {
   try {
     const { id } = req.query;
 
-    const [finanzas_informe, errorFinanzas_informe] = await deleteFinanzas_informeService({ id });
+    const [informe, errorInforme] = await deleteInformeService({ id });
 
-    if (errorFinanzas_informe) return handleErrorClient(res, 404, errorFinanzas_informe);
+    if (errorInforme) return handleErrorClient(res, 404, errorInforme);
 
-    handleSuccess(res, 200, "Informe eliminado", finanzas_informe);
+    handleSuccess(res, 200, "Informe eliminado", informe);
   } catch (error) {
     handleErrorClient(res, 500, error.message);
   }

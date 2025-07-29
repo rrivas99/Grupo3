@@ -70,7 +70,6 @@ export async function updateActividadService(query, body) {
             fecha: body.fecha,
             hora: body.hora,
             estado: body.estado,
-            realizada: body.realizada,
             updatedAt: new Date(),
         };
 

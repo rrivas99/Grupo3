@@ -20,10 +20,16 @@ const PeriodoSchema = new EntitySchema({
             default: ()=> "CURRENT_DATE",
             nullable: false,
         },
-        fecha_definicion: {
-            type: "timestamp with time zone",
-            default: ()=> "CURRENT_TIMESTAMP",
-            nullable: false,
+        createdAt: {
+        type: "timestamp with time zone",
+        default: () => "CURRENT_TIMESTAMP",
+        nullable: false,
+        },
+        updatedAt: {
+        type: "timestamp with time zone",
+        default: () => "CURRENT_TIMESTAMP",
+        onUpdate: "CURRENT_TIMESTAMP",
+        nullable: false,
         },
     },
     indices: [
@@ -31,21 +37,6 @@ const PeriodoSchema = new EntitySchema({
             name: "IDX_ID_PERIODO",
             columns: ["id_periodo"],
             unique: true,
-        },
-        {
-            name: "IDX_INICIO_PERIODO",
-            columns: ["inicio_periodo"],
-            unique: false,
-        },
-        {
-            name: "IDX_FIN_PERIODO",
-            columns: ["fin_periodo"],
-            unique: false,
-        },
-        {
-            name: "IDX_FECHA_DEFINICION",
-            columns: ["fecha_definicion"],
-            unique: false,
         },
     ],
 });

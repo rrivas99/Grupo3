@@ -5,7 +5,7 @@ const VotoSchema = new EntitySchema({
     name: "Voto",
     tableName: "votos",
     columns: {
-        id_voto: {
+        id: {
             type: "int",
             primary: true,
             generated: true,
@@ -18,6 +18,23 @@ const VotoSchema = new EntitySchema({
         voto: {
             type: "varchar",
             length: 255,
+            nullable: false,
+        },
+        id_votacion:{
+            type: "int",
+        },
+        rut_user:{
+            type: "varchar",
+        },
+        createdAt: {
+            type: "timestamp with time zone",
+            default: () => "CURRENT_TIMESTAMP",
+            nullable: false,
+        },
+        updatedAt: {
+            type: "timestamp with time zone",
+            default: () => "CURRENT_TIMESTAMP",
+            onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
         },
     },
@@ -46,16 +63,6 @@ const VotoSchema = new EntitySchema({
             name: "IDX_ID_VOTO",
             columns: ["id_voto"],
             unique: true,
-        },
-        {
-            name: "IDX_PREGUNTA",
-            columns: ["pregunta"],
-            unique: false,
-        },
-        {
-            name: "IDX_VOTO",
-            columns: ["voto"],
-            unique: false,
         },
     ],
 });
